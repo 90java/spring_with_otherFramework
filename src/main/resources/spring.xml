@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		   http://www.springframework.org/schema/context
+		   http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		   http://www.springframework.org/schema/aop
+		   http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		   http://www.springframework.org/schema/rabbit
+		   https://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+	<context:property-placeholder location="classpath:rabbitmq.properties"></context:property-placeholder>
+	<bean id="connectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<property name="username" value="${mymq.username}"></property>
+		<property name="password" value="${mymq.password}"></property>
+		<property name="host" value="${mymq.host}"></property>
+		<property name="port" value="${mymq.port}"></property>
+		<property name="virtualHost" value="${mymq.vhost}"></property>
+ 	</bean>
+	<!--<rabbit:connection-factory id="connectionFactory"/>-->
+	<rabbit:template id="amqptemplate" connection-factory="connectionFactory"/>
+	<rabbit:admin connection-factory="connectionFactory"/>
+	<rabbit:queue name="queue"/>
+
+
+</beans>
