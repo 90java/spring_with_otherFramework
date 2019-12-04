@@ -16,6 +16,7 @@ public class HbnApp {
      */
     @Test
     public void test01(){
+        //操作实体
         Student student = new Student();
 //        student.setId(16);
         student.setName("lixiaofeng13131313");
@@ -23,21 +24,22 @@ public class HbnApp {
         student.setAge(13);
         student.setEmail(UUID.randomUUID().toString().replaceAll("-","")+"@qq.com");
         student.setBirthday(new Date());
+        System.out.println("----");
         // 1.首先我们创建加载配置文件管理对象
         Configuration configuration = new Configuration();
-        // 加载配置文件，默认加载src/hibernate.hbm.xml
+        // 加载配置文件，默认加载src/hibernate.hbm.xml 看源码可以看出
         configuration.configure();
-        // 2.创建session工厂对象
+        // 2.创建session工厂对象 SessionFactory由configuration对象产生不可变的对象
         SessionFactory buildSessionFactory = configuration.buildSessionFactory();
-        // 创建session（代表一个会话，与数据库连接的会话）
+        // 创建session（代表一个会话，与数据库连接的会话） SessionFactory是Session的工厂
         Session session = buildSessionFactory.openSession();
-        // 开启事务
-        Transaction beginTransaction = session.beginTransaction();
+        // 开启事务  session是Transaction的工厂
+        Transaction tx = session.beginTransaction();
         // 执行crud
 //        session.save(student);
         session.saveOrUpdate(student);
         // 提交事务
-        beginTransaction.commit();
+        tx.commit();
         // 关闭session 和工厂
         session.close();
         buildSessionFactory.close();
