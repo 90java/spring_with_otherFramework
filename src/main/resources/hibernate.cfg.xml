@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@127.0.0.1:1521:XE</property>
+        <property name="hibernate.connection.username">nojava1</property>
+        <property name="hibernate.connection.password">nojava1</property>
+        <!-- 可以将向数据库发送的SQL语句显示出来 -->
+        <property name="hibernate.show_sql">true</property>
+        <!-- 格式化SQL语句 -->
+        <property name="hibernate.format_sql">true</property>
+        <!-- hibernate的方言 -->
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+
+
+        <!-- 配置hibernate的映射文件所在的位置 使用xml配置 -->
+       <!-- <mapping resource="Student.hbm.xml" />-->
+
+        <!-- 注册实体 使用注解-->
+        <mapping class="com.nojava.spring_hibernate.domain.Student"/>
+
+    </session-factory>
+</hibernate-configuration>

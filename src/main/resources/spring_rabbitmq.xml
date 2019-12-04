@@ -13,6 +13,18 @@
 		   http://www.springframework.org/schema/rabbit
 		   https://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
+	<context:property-placeholder location="classpath:rabbitmq.properties"></context:property-placeholder>
+	<bean id="connectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<property name="username" value="${mymq.username}"></property>
+		<property name="password" value="${mymq.password}"></property>
+		<property name="host" value="${mymq.host}"></property>
+		<property name="port" value="${mymq.port}"></property>
+		<property name="virtualHost" value="${mymq.vhost}"></property>
+ 	</bean>
+	<!--<rabbit:connection-factory id="connectionFactory"/>-->
+	<rabbit:template id="amqptemplate" connection-factory="connectionFactory"/>
+	<rabbit:admin connection-factory="connectionFactory"/>
+	<rabbit:queue name="queue"/>
 
 
 </beans>
