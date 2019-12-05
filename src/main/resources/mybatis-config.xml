@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.nojava.domain"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
+                <property name="username" value="nojava1"/>
+                <property name="password" value="nojava1"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/StudentMapper.xml"/>
+    </mappers>
+</configuration>

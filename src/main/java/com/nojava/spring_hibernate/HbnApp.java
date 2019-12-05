@@ -1,5 +1,6 @@
-package com.nojava.spring_hibernate.domain;
+package com.nojava.spring_hibernate;
 
+import com.nojava.domain.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

@@ -1,4 +1,4 @@
-package com.nojava.spring_hibernate.domain;
+package com.nojava.domain;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -71,5 +71,17 @@ public class Student {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
+                ", birthday=" + birthday +
+                '}';
     }
 }
