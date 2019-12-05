@@ -25,6 +25,8 @@ public class Student {
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthday;
 
+    private String yuliu01;
+
     public Integer getId() {
         return id;
     }
@@ -73,6 +75,15 @@ public class Student {
         this.birthday = birthday;
     }
 
+    public String getYuliu01() {
+        return yuliu01;
+    }
+
+    public void setYuliu01(String yuliu01) {
+        this.yuliu01 = yuliu01;
+    }
+
+
     @Override
     public String toString() {
         return "Student{" +
@@ -82,6 +93,7 @@ public class Student {
                 ", gender='" + gender + '\'' +
                 ", age=" + age +
                 ", birthday=" + birthday +
+                ", yuliu01='" + yuliu01 + '\'' +
                 '}';
     }
 }

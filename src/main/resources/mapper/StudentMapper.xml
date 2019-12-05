@@ -2,8 +2,31 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace是我们定义接口的全限定名字 这样就可以使用接口调用映射的SQL语句了 这个名字一定要和接口对应上-->
 <mapper namespace="com.nojava.spring_mybatis.StudentMapper">
+    
+    <resultMap id="StudentResult" type="Student">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="email" column="email"></result>
+        <result property="gender" column="gender"></result>
+        <result property="age" column="age"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="yuliu01" column="yuliu_01"></result>
+    </resultMap>
+
+    <!-- select * from student where id = #{id} -->
     <select id="selectStudentByid" resultType="Student" parameterType="Integer">
-        select * from Student where id = #{id}
+        select id,name,email,gender,age,birthday,yuliu_01 as yuliu01  from student where id = #{id}
     </select>
+
+    <insert id="insertStudent" parameterType="Student">
+        insert into student(name,email,gender,age,birthday,yuliu_01)
+        values (#{name},#{email},#{gender},#{age},#{birthday},#{yuliu01});
+    </insert>
+
+    <select id="findAllStudents" resultMap="StudentResult">
+        select * from student
+    </select>
+
 </mapper>
