@@ -18,10 +18,10 @@
 
 
         <!-- 配置hibernate的映射文件所在的位置 使用xml配置 -->
-        <mapping resource="hbm/Student.hbm.xml" />
+        <!--<mapping resource="hbm/Student.hbm.xml" />-->
 
         <!-- 注册实体 使用注解-->
-     <!--   <mapping class="com.nojava.domain.Student"/>-->
+        <mapping class="com.nojava.domain.Student"/>
 
     </session-factory>
 </hibernate-configuration>

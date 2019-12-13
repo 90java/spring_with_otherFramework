@@ -1,10 +1,13 @@
 package com.nojava.domain;
 
+import org.apache.ibatis.type.Alias;
+
 import javax.persistence.*;
 import java.util.Date;
 @Entity
 @Table(name = "student")
 @SequenceGenerator(name = "SEQ_STUDENT",sequenceName = "SEQ_STUDENT",allocationSize = 1)
+//@Alias("Student")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_STUDENT")

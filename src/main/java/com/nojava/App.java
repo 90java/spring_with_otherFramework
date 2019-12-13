@@ -1,5 +1,7 @@
 package com.nojava;
 
+import java.util.Date;
+
 /**
  * Hello world!
  *
@@ -8,14 +10,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
 
+        System.out.println(',');
 
-        Integer a = 11;
-        Integer b = 11;
-        System.out.println(a==b);
-        Integer c = 128;
-        Integer d = 128;
-        System.out.println(c==d);
     }
 }

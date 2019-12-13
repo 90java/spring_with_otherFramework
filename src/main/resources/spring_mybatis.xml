@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		   http://www.springframework.org/schema/context
+		   http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		   http://www.springframework.org/schema/aop
+		   http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		   http://www.springframework.org/schema/rabbit
+		   https://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+	<context:property-placeholder location="db.properties"/>
+	<!--apache dpcp数据源-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>${jdbc.driver}</value>
+		</property>
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<!-- 最大连接数  在同一时间只能有这么多连接对象  并发访问-->
+		<property name="maxActive">
+			<value>3</value>
+		</property>
+		<!-- 最大空闲连接数 最小连接数-->
+		<property name="maxIdle">
+			<value>3</value>
+		</property>
+		<!-- 最大等待时间:当没有可用连接时,连接池等待连接被归还的最大时间 单位:毫秒 -->
+		<!-- 超过时间则抛出异常,如果设置为-1表示无限等待 -->
+		<property name="maxWait">
+			<value>3000</value>
+		</property>
+	</bean>
+	<!-- 配置sqlsessionFactory -->
+	<!-- 查看源码便可知注入的property的名字 -->
+	<!-- 可以读取mybatis-config.xml文件,也可以不读取,信息全都在配置在spring中 -->
+	<!-- <property name="configLocation" value="classpath:mybatis-config.xml" /> -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--<property name="configLocation" value="classpath:mybatis-config.xml"></property>-->
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.nojava.domain"></property>
+		<property name="configurationProperties">
+			<props>
+				<prop key="cacheEnabled">true</prop>
+				<prop key="lazyLoadingEnabled">false</prop>
+			</props>
+		</property>
+		<property name="mapperLocations" value="mapper/StudentMapper.xml"></property>
+ 	</bean>
+
+	<!--
+             扫描mapper接口所在的包名，当有多个包的时候，用半角逗号分隔即可,也可以使用*通配符
+             注意:这里不注入sqlSessionFactory也是可以的
+        -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.nojava.spring_mybatis.mapper"></property>
+	</bean>
+
+</beans>

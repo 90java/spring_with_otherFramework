@@ -1,6 +1,7 @@
 package com.nojava.spring_mybatis;
 
 import com.nojava.domain.Student;
+import com.nojava.spring_mybatis.mapper.StudentMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -109,7 +110,7 @@ public class MybatisApp {
     @Test
     public void test05(){
         try(SqlSession session = sqlSessionFactory.openSession()){
-            Student o = (Student)session.selectOne("com.nojava.spring_mybatis.StudentMapper.selectStudentByid", 3);
+            Student o = (Student)session.selectOne("com.nojava.spring_mybatis.mapper.StudentMapper.selectStudentByid", 3);
             System.out.println(o);
         }
     }
@@ -121,7 +122,6 @@ public class MybatisApp {
     public void test06() throws IOException {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         sqlSessionFactory =  new SqlSessionFactoryBuilder().build(inputStream,"test");
-
         //操作实体
         Student student = new Student();
 //        student.setId(16);
@@ -139,5 +139,46 @@ public class MybatisApp {
         }
     }
 
+    /**
+     * db.properties 配置测试
+     * Oracle并不支持AUTO_INCREMENT列 测试其使用序列（SEQUENCE）来生成主键值
+     *
+     */
+    @Test
+    public void test07() throws IOException {
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        sqlSessionFactory =  new SqlSessionFactoryBuilder().build(inputStream,"dev01");
+        //操作实体
+        Student student = new Student();
+//        student.setId(16);
+        student.setName("lixiaofeng13131313");
+        student.setGender("m");
+        student.setAge(13);
+        student.setEmail(UUID.randomUUID().toString().replaceAll("-","")+"@qq.com");
+        student.setBirthday(new Date());
+        student.setYuliu01("yuliu01");
+        try(SqlSession session = sqlSessionFactory.openSession(true)){
+            StudentMapper mapper = session.getMapper(StudentMapper.class);
+            boolean b = mapper.insertStudent02(student);
+            System.out.println(b);
+//            session.commit();
+        }
+    }
+
+    /**
+     *
+     * @throws IOException
+     */
+    @Test
+    public void test08() throws IOException {
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        sqlSessionFactory =  new SqlSessionFactoryBuilder().build(inputStream,"dev01");
+
+        try(SqlSession session = sqlSessionFactory.openSession(true)){
+            StudentMapper mapper = session.getMapper(StudentMapper.class);
+            List<Student> allStudents = mapper.findAllStudents();
+            System.out.println(allStudents);
+        }
+    }
 
 }

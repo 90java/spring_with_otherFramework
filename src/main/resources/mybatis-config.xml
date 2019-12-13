@@ -3,22 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <properties resource="db.properties">
+        <!-- 注意:是db.properties文件中的值优先级高 -->
+        <property name="jdbc.username" value="briup" />
+        <property name="jdbc.password" value="briup" />
+    </properties>
     <typeAliases>
         <typeAlias alias="Student" type="com.nojava.domain.Student"/>
-        <package name="com.nojava.domain"/>
+        <package name="com.nojava.domain"/><!--会进行扫描@Alias 如果没注解则使用类型做别名-->
     </typeAliases>
+    <typeHandlers>
+        <typeHandler handler="com.nojava.spring_mybatis.PhoneTypeHandler"></typeHandler>
+    </typeHandlers>
     <environments default="dev">
         <environment id="dev">
+            <!---->
             <transactionManager type="JDBC"/>
+            <!---->
             <dataSource type="POOLED">
-<!--                <property name="driver" value="oracle.jdbc.OracleDriver"/>-->
-<!--                <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>-->
-<!--                <property name="username" value="nojava1"/>-->
-<!--                <property name="password" value="nojava1"/>                -->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="url" value="jdbc:mysql://192.168.136.150:3306/spring?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=GMT%2B8"/>
                 <property name="username" value="90java"/>
                 <property name="password" value="90java"/>
+            </dataSource>
+        </environment>
+
+        <environment id="dev01">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
 

@@ -51,7 +51,20 @@ public class HbnApp {
      */
     @Test
     public void test02(){
+        // 1.首先我们创建加载配置文件管理对象
+        Configuration configuration = new Configuration();
+        // 加载配置文件，默认加载src/hibernate.hbm.xml 看源码可以看出
+        configuration.configure();
+        // 2.创建session工厂对象 SessionFactory由configuration对象产生不可变的对象
+        SessionFactory buildSessionFactory = configuration.buildSessionFactory();
+        // 创建session（代表一个会话，与数据库连接的会话） SessionFactory是Session的工厂
+        Session session = buildSessionFactory.openSession();
 
+        Student student = session.get(Student.class, 13);
+        System.out.println("student:"+student);
+
+        session.close();
+        buildSessionFactory.close();
     }
 
 
