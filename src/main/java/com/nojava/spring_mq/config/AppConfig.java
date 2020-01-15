@@ -1,7 +1,11 @@
 package com.nojava.spring_mq.config;
 
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,8 +32,9 @@ public class AppConfig {
     @Value("${mymq.vhost}")
     private String virtualHost;
 
-    @Bean("mqConnectionFactory")
-    public ConnectionFactory getConnection(){
+
+    @Bean
+    public ConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
         cachingConnectionFactory.setUsername(username);
         cachingConnectionFactory.setPassword(password);
@@ -38,5 +43,22 @@ public class AppConfig {
         cachingConnectionFactory.setVirtualHost(virtualHost);
         return cachingConnectionFactory;
     }
+
+    @Bean
+    public AmqpAdmin amqpAdmin() {
+        return new RabbitAdmin(connectionFactory());
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate() {
+        return new RabbitTemplate(connectionFactory());
+    }
+
+    @Bean
+    public Queue myQueue() {
+        return new Queue("myqueue");
+    }
+
+
 
 }
