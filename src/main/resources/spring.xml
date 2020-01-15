@@ -13,6 +13,19 @@
 		   http://www.springframework.org/schema/rabbit
 		   https://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
+	<!--循环依赖-->
+<!--	<bean id="user" class="com.nojava.domain.User">-->
+<!--		<constructor-arg ref="role"/>-->
+<!--	</bean>-->
+<!--	<bean id="role" class="com.nojava.domain.Role">-->
+<!--		<constructor-arg ref="user"/>-->
+<!--	</bean>-->
 
+	<bean id="user" class="com.nojava.domain.User">
+		<property name="role" ref="role"></property>
+	</bean>
+	<bean id="role" class="com.nojava.domain.Role">
+		<property name="user" ref="user"/>
+	</bean>
 
 </beans>

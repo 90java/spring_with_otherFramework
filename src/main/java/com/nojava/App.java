@@ -1,5 +1,7 @@
 package com.nojava;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.util.Date;
 
 /**
@@ -11,7 +13,7 @@ public class App
     public static void main( String[] args )
     {
 
-        System.out.println(',');
+        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("spring.xml");
 
     }
 }
